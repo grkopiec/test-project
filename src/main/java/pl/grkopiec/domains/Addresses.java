@@ -1,9 +1,9 @@
 package pl.grkopiec.domains;
 
 public class Addresses {
-	public String http;
-	public String tcp;
-	public String udp;
+	private String http;
+	private String tcp;
+	private String udp;
 
 	public String getHttp() {
 		return http;
