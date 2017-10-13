@@ -16,17 +16,14 @@ import org.springframework.web.client.RestTemplate;
 
 import pl.grkopiec.components.ConnectionsProperties;
 import pl.grkopiec.domains.Addresses;
-import pl.grkopiec.tcp.TCPClient;
-import pl.grkopiec.udp.UDPClient;
+import pl.grkopiec.services.SendingService;
 
 @RestController
 public class RestContrller {
 	private static final Logger logger = LogManager.getLogger(RestContrller.class);
 	
 	@Autowired
-	private UDPClient uDPClient;
-	@Autowired
-	private TCPClient tCPClient;
+	private SendingService sendingService;
 	@Autowired
 	private ConnectionsProperties connectionsProperties;
 	
@@ -36,14 +33,8 @@ public class RestContrller {
 		reciveHttpUDP(addresses);
 		sendAndReciveUDP();
 		
-//		System.out.println(addresses.getTcp());
-//		String tcpIp = StringUtils.substringBetween(addresses.getTcp(), "//", ":");
-//		Integer tcpPort = Integer.parseInt(StringUtils.substringBetween(addresses.getTcp(), tcpIp + ":", "/"));
-//		tCPClient.startConnection(tcpIp, tcpPort);
-//	    byte[] resp1 = tCPClient.sendMessage("getFrame");
-//	    System.out.println(new String(resp1));
-//	    tCPClient.stopConnection();
-//	    
+		sendingService.startTransmition();
+	    
 //	    ByteArrayOutputStream recivedFullArray = new ByteArrayOutputStream();
 //	    for (int i = 0; i < resp1.length; i = i + 20) {
 //	    	byte[] chunk = Arrays.copyOfRange(resp1, i, i + 20);

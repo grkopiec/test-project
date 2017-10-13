@@ -1,11 +1,13 @@
 package pl.grkopiec;
 
+import java.io.IOException;
 import java.net.SocketException;
 
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
 import pl.grkopiec.domains.Addresses;
+import pl.grkopiec.tcp.TCPServer;
 
 public class FlowTest {
 	@Test
@@ -18,15 +20,15 @@ public class FlowTest {
 		addresses.setHttp(serverHttp);
 		addresses.setTcp(serverTcp);
 		
-//		new Thread(new Runnable() {
-//			public void run() {
-//		        try {
-//		        	new TCPServer().start(4444);
-//				} catch (IOException e) {
-//					throw new RuntimeException(e);
-//				}
-//			}
-//		}).start();
+		new Thread(new Runnable() {
+			public void run() {
+		        try {
+		        	new TCPServer().start(4444);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}).start();
 //		new Thread(new Runnable() {
 //			public void run() {
 //				try {

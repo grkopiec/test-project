@@ -1,5 +1,6 @@
 package pl.grkopiec.components;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,23 @@ public class ConnectionsProperties {
 		clients.setTcp("tcp://localhost:4444/");
 		clients.setUdp("udp://localhost:5555/");
 		servers = new Addresses();
+	}
+	
+	public String getServerTcpIp() {
+		String serverTcp = servers.getTcp();
+		String serverTcpIp = StringUtils.substringBetween(serverTcp, "//", ":");
+		logger.debug("Retrived id: " + serverTcpIp + " from url: " + serverTcp);
+		return serverTcpIp;
+	}
+	
+	public Integer getServerTcpPort() {
+		String serverTcp = servers.getTcp();
+		String serverTcpIp = getServerTcpIp();
+		
+		String serverTcpPortStringValue = StringUtils.substringBetween(serverTcp, serverTcpIp + ":", "/");
+		Integer serverTcpPortIntValue = Integer.parseInt(serverTcpPortStringValue);
+		logger.debug("Retrived port: " + serverTcpPortIntValue + " from url: " + serverTcp);
+		return serverTcpPortIntValue;
 	}
 
 	public Addresses getServers() {

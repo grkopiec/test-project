@@ -27,11 +27,15 @@ public class TCPServer {
         while ((inputLine = in.readLine()) != null) {
         	System.out.println(inputLine);
             if ("getFrame".equals(inputLine)) {
-            	out.writeInt(StringUtils.frame.length);
-            	out.write(StringUtils.frame);
+            	for (int i = 0; i < 20; i++) {
+            		System.out.println(i);
+	            	out.write(StringUtils.frame);
+	            	out.flush();
+            	}
+            	out.write(StringUtils.endTransmitionFrame);
             	out.flush();
             } else {
-            	out.writeInt(-1);
+            	out.write(StringUtils.endTransmitionFrame);
             	break;
             }
         }

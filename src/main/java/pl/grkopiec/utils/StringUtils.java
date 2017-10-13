@@ -7,4 +7,8 @@ public class StringUtils {
 	public static final byte[] chunkFrame = chunkLabel.getBytes();
 	public static final String endLabel = "end";
 	public static final byte[] endFrame = endLabel.getBytes();
+	public static final String endTransmitionLabel = "-1";
+	public static final byte[] endTransmitionFrame = endTransmitionLabel.getBytes();
+	
+	public static final String initTcpMessage = "getFrame";
 }
