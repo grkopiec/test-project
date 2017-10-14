@@ -33,17 +33,6 @@ public class RestContrller {
 		restsService.sendAndReciveUDP();
 		
 		sendingService.startTransmition();
-	    
-//	    ByteArrayOutputStream recivedFullArray = new ByteArrayOutputStream();
-//	    for (int i = 0; i < resp1.length; i = i + 20) {
-//	    	byte[] chunk = Arrays.copyOfRange(resp1, i, i + 20);
-//	    	byte[] udpRecivedData = uDPClient.sendEcho(chunk);
-//	    	recivedFullArray.write(udpRecivedData);
-//	    }
-//	    byte[] recFullArr = recivedFullArray.toByteArray();
-//	    System.out.println(new String(recFullArr));
-//	    
-//	    uDPClient.sendEcho("end".getBytes());
 		
 		ResponseEntity<Void> responseEntity = new ResponseEntity<>(HttpStatus.OK);
 		return responseEntity;
