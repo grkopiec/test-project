@@ -16,7 +16,7 @@ public class UDPServer {
         boolean running = true;
         
         while (running) {
-            byte[] buf = new byte[100];
+            byte[] buf = new byte[24];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
 			socket.receive(packet);
              

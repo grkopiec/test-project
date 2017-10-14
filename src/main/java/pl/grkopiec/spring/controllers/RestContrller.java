@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import pl.grkopiec.components.ConnectionsProperties;
 import pl.grkopiec.domains.Addresses;
+import pl.grkopiec.services.RestsService;
 import pl.grkopiec.services.SendingService;
 
 @RestController
@@ -25,13 +24,13 @@ public class RestContrller {
 	@Autowired
 	private SendingService sendingService;
 	@Autowired
-	private ConnectionsProperties connectionsProperties;
+	private RestsService restsService;
 	
 	@RequestMapping(path = "/addresses", method = RequestMethod.POST)
 	public ResponseEntity<Void> addresses(@RequestBody Addresses addresses) throws UnknownHostException, IOException {
 		logger.debug("Starting application");
-		reciveHttpUDP(addresses);
-		sendAndReciveUDP();
+		restsService.reciveHttpUDP(addresses);
+		restsService.sendAndReciveUDP();
 		
 		sendingService.startTransmition();
 	    
@@ -61,25 +60,10 @@ public class RestContrller {
 		return responseEntity;
 	}
 	
-	private void reciveHttpUDP(Addresses addresses) {
-		logger.debug("Recived http: " + addresses.getHttp());
-		logger.debug("Recived tcp: " + addresses.getTcp());
-		connectionsProperties.getServers().setHttp(addresses.getHttp());
-		connectionsProperties.getServers().setTcp(addresses.getTcp());
-	}
-	
-	private void sendAndReciveUDP() {
-		String serverHttp = connectionsProperties.getServers().getHttp();
-		String clientUDP = connectionsProperties.getClients().getUdp();
-		Addresses sendUDPAddress = new Addresses();
-		sendUDPAddress.setTcp(clientUDP);
-		
-		RestTemplate restTemplate = new RestTemplate();
-		logger.debug("Sending udp: " + clientUDP);
-		Addresses recivedUDPAddress = restTemplate.postForObject(serverHttp, sendUDPAddress, Addresses.class);
-		
-		String serverUDP = recivedUDPAddress.getUdp();
-		logger.debug("Recived udp: " + serverUDP);
-		connectionsProperties.getServers().setUdp(serverUDP);
+	//for test purposes
+	@RequestMapping(path = "/closed-server", method = RequestMethod.POST)
+	public ResponseEntity<Void> closedServer() {
+		ResponseEntity<Void> responseEntity = new ResponseEntity<>(HttpStatus.OK);
+		return responseEntity;
 	}
 }
